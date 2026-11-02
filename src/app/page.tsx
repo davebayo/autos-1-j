@@ -176,11 +176,8 @@ export default function Home() {
             </div>
           </div>
           <div className="order-1 md:order-2 relative aspect-square">
-             {/* Using a placeholder as /images/uncle-modupe.webp won't exist */}
             <div className="absolute inset-0 bg-white/5 border border-white/20 flex items-center justify-center p-8">
-               <div className="w-full h-full bg-black flex items-center justify-center font-mono text-xs text-white/50 border border-white/10">
-                 [IMAGE_PORTRAIT: /images/uncle-modupe.webp]
-               </div>
+               <img src="/images/WhatsApp Image 2026-11-02 at 8.13.10 PM.jpeg" alt="Uncle Modupe" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border border-white/10" />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-modfem-racingEmerald text-black font-mono text-xs p-4 font-bold uppercase">
               Modupe • Vaughan, ON
