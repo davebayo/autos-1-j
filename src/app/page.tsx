@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
 import { getWhatsAppUrl } from '@/lib/site-config';
 import { calculateLandedCost, formatNGN, formatCAD } from '@/lib/pricing';
+import { DistressHero } from '@/components/DistressHero';
+import { EditorialDealerSignoff } from '@/components/EditorialDealerSignoff';
 
 const SHOWROOM_VEHICLES = [
   {
@@ -59,87 +61,23 @@ export default function Home() {
 
   return (
     <div className="relative min-h-[calc(100vh-64px)] w-full overflow-hidden bg-modfem-obsidian">
-
-      {/* Background Image Area */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-black/60 z-10" /> {/* Overlay for contrast */}
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={`${activeVehicle.id}-${activeAngle}`}
-            src={activeVehicle.images[activeAngle]}
-            alt={activeVehicle.name}
-            className="w-full h-full object-cover object-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          />
-        </AnimatePresence>
-
-        {/* Technical Grid Overlay */}
-        <div className="absolute inset-0 z-10 pointer-events-none opacity-20"
-             style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '100px 100px' }}>
-        </div>
-      </div>
-
-      {/* Main Content Overlay */}
-      <div className="relative z-20 container mx-auto px-4 h-full pt-12 pb-24 flex flex-col justify-between min-h-[calc(100vh-64px)]">
-
-        {/* Top Info */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-          <div className="max-w-2xl">
-            <div className={`inline-block px-3 py-1 font-mono text-xs font-bold uppercase mb-4 ${activeVehicle.badgeColor === ('amber' as string) ? 'bg-modfem-signalAmber text-black' : 'bg-modfem-racingEmerald text-black'}`}>
-              {activeVehicle.badge}
-            </div>
-            <h1 className="font-sans font-bold text-4xl md:text-6xl uppercase tracking-tighter mb-4 text-white leading-tight">
-              {activeVehicle.name}
-            </h1>
-            <div className="font-mono text-xl md:text-2xl text-modfem-racingEmerald bg-black/50 p-2 inline-block border border-white/10">
-              LANDED TOTAL: {formatNGN(landedCost.totalNGN)}
-            </div>
-          </div>
-
-          <div className="flex gap-2 font-mono text-sm">
-            <button
-              onClick={() => setActiveAngle('front')}
-              className={`px-4 py-2 border ${activeAngle === 'front' ? 'border-modfem-racingEmerald text-modfem-racingEmerald' : 'border-white/20 text-white hover:border-white/50'} uppercase tracking-wider`}
-            >
-              FRONT // 01
-            </button>
-            <button
-              onClick={() => setActiveAngle('side')}
-              className={`px-4 py-2 border ${activeAngle === 'side' ? 'border-modfem-racingEmerald text-modfem-racingEmerald' : 'border-white/20 text-white hover:border-white/50'} uppercase tracking-wider`}
-            >
-              SIDE // 02
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom Actions */}
-        <div className="mt-12 flex flex-col md:flex-row justify-between items-end gap-8">
-          <div className="flex gap-4">
-            <Button onClick={() => setIsDrawerOpen(true)}>
-              VIEW MONRONEY SPEC SHEET
-            </Button>
-            <a href={getWhatsAppUrl(`I am interested in the ${activeVehicle.name}. Please send more details.`)} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline">
-                SECURE ON WHATSAPP
-              </Button>
-            </a>
-          </div>
-
-          <div className="flex gap-2">
-            {SHOWROOM_VEHICLES.map((v, idx) => (
-              <button
-                key={v.id}
-                onClick={() => setActiveVehicleIdx(idx)}
-                className={`w-12 h-2 ${idx === activeVehicleIdx ? 'bg-modfem-racingEmerald' : 'bg-white/20'}`}
-                aria-label={`View ${v.name}`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* New Full-Viewport Hero with Split Glass UI */}
+      <DistressHero
+        vehicleName={activeVehicle.name}
+        landedCost={formatNGN(landedCost.totalNGN)}
+        badge={activeVehicle.badge}
+        badgeColor={activeVehicle.badgeColor}
+        imageUrl={activeVehicle.images[activeAngle]}
+        activeVehicleIdx={activeVehicleIdx}
+        setActiveVehicleIdx={setActiveVehicleIdx}
+        activeAngle={activeAngle}
+        setActiveAngle={setActiveAngle}
+        totalVehicles={SHOWROOM_VEHICLES.length}
+        onOpenSpecSheet={() => setIsDrawerOpen(true)}
+        onWhatsAppClick={() => {
+          window.open(getWhatsAppUrl(`I am interested in the ${activeVehicle.name}. Please send more details.`), '_blank');
+        }}
+      />
 
       {/* Mechanical Shift-Gate Timeline */}
       <div className="bg-black border-y border-white/10 relative z-30 py-6 overflow-x-auto">
@@ -158,34 +96,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Meet Your Canadian Partner Section */}
-      <div className="bg-modfem-obsidian relative z-30 py-24">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1">
-            <h2 className="font-sans font-bold text-4xl uppercase tracking-tighter mb-6">Meet Your Canadian Partner</h2>
-            <p className="font-mono text-sm text-gray-400 mb-8 leading-relaxed">
-              Based in Vaughan, Ontario. I handle the end-to-end concierge process so you don&apos;t have to worry about fraud, hidden port fees, or mechanical lemons.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs uppercase tracking-wider">
-              <div className="border border-white/10 p-4 hover:border-modfem-racingEmerald transition-colors"><div className="text-modfem-racingEmerald mb-2">01 //</div> Car Sourcing</div>
-              <div className="border border-white/10 p-4 hover:border-modfem-racingEmerald transition-colors"><div className="text-modfem-racingEmerald mb-2">02 //</div> Pre-Purchase Inspection</div>
-              <div className="border border-white/10 p-4 hover:border-modfem-racingEmerald transition-colors"><div className="text-modfem-racingEmerald mb-2">03 //</div> Purchase Support</div>
-              <div className="border border-white/10 p-4 hover:border-modfem-racingEmerald transition-colors"><div className="text-modfem-racingEmerald mb-2">04 //</div> Shipping to Nigeria</div>
-              <div className="border border-white/10 p-4 hover:border-modfem-racingEmerald transition-colors"><div className="text-modfem-racingEmerald mb-2">05 //</div> Financing Support</div>
-              <div className="border border-white/10 p-4 hover:border-modfem-racingEmerald transition-colors"><div className="text-modfem-racingEmerald mb-2">06 //</div> Car Upgrading & Swapping</div>
-            </div>
-          </div>
-          <div className="order-1 md:order-2 relative aspect-square">
-            <div className="absolute inset-0 bg-white/5 border border-white/20 flex items-center justify-center p-8">
-               {/* eslint-disable-next-line @next/next/no-img-element */}
-               <img src="/images/WhatsApp Image 2026-11-02 at 8.13.10 PM.jpeg" alt="Uncle Modupe" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border border-white/10" />
-            </div>
-            <div className="absolute -bottom-6 -left-6 bg-modfem-racingEmerald text-black font-mono text-xs p-4 font-bold uppercase">
-              Modupe • Vaughan, ON
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Editorial Dealer Signoff Section */}
+      <EditorialDealerSignoff />
 
       {/* Landed Cost Drawer */}
       <AnimatePresence>
