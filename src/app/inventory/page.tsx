@@ -44,14 +44,14 @@ const ARCHIVE_VEHICLES = [
   {
     id: 'honda-civic',
     name: '2018 Honda Civic EX',
-    status: 'DELIVERED',
+    status: 'Delivered',
     image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?q=80&w=400&auto=format&fit=crop', // Low res
     deliveredTo: 'Lagos, NG',
   },
   {
     id: 'toyota-camry',
     name: '2020 Toyota Camry SE',
-    status: 'IN_TRANSIT',
+    status: 'On Route',
     image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=400&auto=format&fit=crop', // Low res
     deliveredTo: 'Abuja, NG',
   }
@@ -77,18 +77,19 @@ export default function Inventory() {
             >
               <div className="aspect-[16/9] bg-gray-200 mb-6 relative overflow-hidden border border-black">
                 {/* High res images here */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover" />
 
                 {/* SVG Inspection Hotspot Pins */}
                 <div className="absolute top-[30%] left-[20%] group cursor-pointer">
-                  <div className="w-4 h-4 bg-modfem-signalAmber rounded-full border-2 border-black flex items-center justify-center shadow-lg"></div>
+                  <div className="w-4 h-4 bg-modfem-signalAmber rounded-none border-2 border-black flex items-center justify-center shadow-lg"></div>
                   <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white px-2 py-1 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
                     01 // POWERTRAIN
                   </div>
                 </div>
 
                 <div className="absolute top-[40%] right-[30%] group cursor-pointer">
-                  <div className="w-4 h-4 bg-modfem-signalAmber rounded-full border-2 border-black flex items-center justify-center shadow-lg"></div>
+                  <div className="w-4 h-4 bg-modfem-signalAmber rounded-none border-2 border-black flex items-center justify-center shadow-lg"></div>
                   <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white px-2 py-1 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
                     02 // TITLE
                   </div>
@@ -120,6 +121,7 @@ export default function Inventory() {
           <div key={vehicle.id} className="border border-white/10 bg-white/5 p-4 flex flex-col sm:flex-row items-center gap-6 hover:bg-white/10 transition-colors">
             {/* TelemetryDossierViewport: max-width 180px, object-fit contain so it's not stretched */}
             <div className="w-full sm:w-[180px] h-[120px] bg-black border border-white/20 flex-shrink-0 flex items-center justify-center p-2 relative overflow-hidden">
+               {/* eslint-disable-next-line @next/next/no-img-element */}
                <img src={vehicle.image} alt={vehicle.name} className="max-w-full max-h-full object-contain" />
                <div className="absolute top-0 right-0 bg-black/80 px-2 py-1 text-[10px] font-mono border-b border-l border-white/20">LOW_RES</div>
             </div>
@@ -129,7 +131,7 @@ export default function Inventory() {
               <div className="grid grid-cols-2 gap-4 font-mono text-sm text-gray-400">
                 <div>
                   <span className="block text-xs text-gray-500 mb-1">STATUS</span>
-                  <span className="text-white">{vehicle.status === 'IN_TRANSIT' ? 'On Route' : 'Delivered'}</span>
+                  <span className="text-white">{vehicle.status}</span>
                 </div>
                 <div>
                   <span className="block text-xs text-gray-500 mb-1">DESTINATION</span>
