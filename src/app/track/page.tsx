@@ -17,7 +17,7 @@ const MOCK_TRACKING_DATA = {
     { id: 4, title: 'ON VESSEL (Atlantic RoRo)', date: 'Pending', completed: false },
     { id: 5, title: 'ARRIVED AT DESTINATION (Tin Can, NG)', date: 'Pending', completed: false },
     { id: 6, title: 'CLEARED CUSTOMS', date: 'Pending', completed: false },
-    { id: 7, title: 'DELIVERED', date: 'Pending', completed: false },
+    { id: 7, title: 'Delivered', date: 'Pending', completed: false },
   ]
 };
 
