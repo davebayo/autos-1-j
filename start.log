@@ -1,0 +1,12 @@
+
+> next-app@0.1.0 start
+> next start -p 3001
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3001
+
+ ✓ Starting...
+ ✓ Ready in 449ms
+ ⚠ For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=400&auto=format&fit=crop 404
