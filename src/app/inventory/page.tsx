@@ -44,14 +44,14 @@ const ARCHIVE_VEHICLES = [
   {
     id: 'honda-civic',
     name: '2018 Honda Civic EX',
-    status: 'DELIVERED',
+    status: 'Delivered',
     image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?q=80&w=400&auto=format&fit=crop', // Low res
     deliveredTo: 'Lagos, NG',
   },
   {
     id: 'toyota-camry',
     name: '2020 Toyota Camry SE',
-    status: 'IN_TRANSIT',
+    status: 'On Route',
     image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=400&auto=format&fit=crop', // Low res
     deliveredTo: 'Abuja, NG',
   }
@@ -129,7 +129,7 @@ export default function Inventory() {
               <div className="grid grid-cols-2 gap-4 font-mono text-sm text-gray-400">
                 <div>
                   <span className="block text-xs text-gray-500 mb-1">STATUS</span>
-                  <span className="text-white">{vehicle.status === 'IN_TRANSIT' ? 'On Route' : 'Delivered'}</span>
+                  <span className="text-white">{vehicle.status}</span>
                 </div>
                 <div>
                   <span className="block text-xs text-gray-500 mb-1">DESTINATION</span>
