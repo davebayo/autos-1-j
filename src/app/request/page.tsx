@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/Button';
 import { getWhatsAppUrl } from '@/lib/site-config';
+import { submitMandate } from './actions';
 
 type RequestMode = 'sourcing' | 'swap';
 
@@ -21,21 +22,9 @@ export default function Request() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // In a real app, we'd also POST this to our /api/store route
-    try {
-      await fetch('/api/store', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-passcode': 'placeholder-until-auth-implemented'
-        },
-        body: JSON.stringify({
-          mode, targetSpec, budget, port, tradeInYMM, tradeInCondition
-        })
-      });
-    } catch (err) {
-      console.error("Failed to persist request", err);
-    }
+    await submitMandate({
+      mode, targetSpec, budget, port, tradeInYMM, tradeInCondition
+    });
 
     // Generate formatted WhatsApp dispatch
     let message = '';

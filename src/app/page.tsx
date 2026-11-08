@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/Button';
 import { getWhatsAppUrl } from '@/lib/site-config';
+import Image from 'next/image';
 import { calculateLandedCost, formatNGN, formatCAD } from '@/lib/pricing';
 
 const SHOWROOM_VEHICLES = [
@@ -53,6 +54,7 @@ export default function Home() {
   const [activeVehicleIdx, setActiveVehicleIdx] = useState(0);
   const [activeAngle, setActiveAngle] = useState<'front' | 'side'>('front');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const activeVehicle = SHOWROOM_VEHICLES[activeVehicleIdx];
   const landedCost = calculateLandedCost(activeVehicle.costBreakdown, activeVehicle.isVerified);
@@ -64,16 +66,24 @@ export default function Home() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-black/60 z-10" /> {/* Overlay for contrast */}
         <AnimatePresence mode="wait">
-          <motion.img
+          <motion.div
             key={`${activeVehicle.id}-${activeAngle}`}
-            src={activeVehicle.images[activeAngle]}
-            alt={activeVehicle.name}
-            className="w-full h-full object-cover object-center"
-            initial={{ opacity: 0 }}
+            className="absolute inset-0"
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          />
+            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
+          >
+            <div className="relative w-full h-full">
+              <Image
+                src={activeVehicle.images[activeAngle]}
+                alt={activeVehicle.name}
+                fill
+                priority
+                className="object-cover object-center"
+              />
+            </div>
+          </motion.div>
         </AnimatePresence>
 
         {/* Technical Grid Overlay */}
@@ -177,7 +187,9 @@ export default function Home() {
           </div>
           <div className="order-1 md:order-2 relative aspect-square">
             <div className="absolute inset-0 bg-white/5 border border-white/20 flex items-center justify-center p-8">
-               <img src="/images/WhatsApp Image 2026-11-02 at 8.13.10 PM.jpeg" alt="Uncle Modupe" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border border-white/10" />
+               <div className="relative w-full h-full">
+                 <Image src="/images/WhatsApp Image 2026-11-02 at 8.13.10 PM.jpeg" alt="Uncle Modupe" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500 border border-white/10" sizes="(max-width: 768px) 100vw, 50vw" />
+               </div>
             </div>
             <div className="absolute -bottom-6 -left-6 bg-modfem-racingEmerald text-black font-mono text-xs p-4 font-bold uppercase">
               Modupe • Vaughan, ON
@@ -192,17 +204,18 @@ export default function Home() {
           <>
             <motion.div
               className="fixed inset-0 bg-black/80 z-40"
-              initial={{ opacity: 0 }}
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : undefined}
               onClick={() => setIsDrawerOpen(false)}
             />
             <motion.div
               className="fixed top-0 right-0 h-full w-full max-w-lg bg-white text-black z-50 overflow-y-auto border-l-4 border-modfem-racingEmerald"
-              initial={{ x: '100%' }}
+              initial={shouldReduceMotion ? { x: 0 } : { x: '100%' }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              exit={shouldReduceMotion ? { x: 0 } : { x: '100%' }}
+              transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', damping: 25, stiffness: 200 }}
             >
               <div className="p-6">
                 <div className="flex justify-between items-center border-b-2 border-black pb-4 mb-6">
