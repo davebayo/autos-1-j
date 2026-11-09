@@ -2,6 +2,7 @@ import { MonroneyCard } from '@/components/MonroneyCard';
 import { Button } from '@/components/Button';
 import { getWhatsAppUrl } from '@/lib/site-config';
 import { calculateLandedCost, formatNGN } from '@/lib/pricing';
+import Image from 'next/image';
 
 const FEATURED_VEHICLES = [
   {
@@ -77,7 +78,9 @@ export default function Inventory() {
             >
               <div className="aspect-[16/9] bg-gray-200 mb-6 relative overflow-hidden border border-black">
                 {/* High res images here */}
-                <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover" />
+                <div className="relative w-full h-full">
+                  <Image src={vehicle.image} alt={vehicle.name} fill className="object-cover" />
+                </div>
 
                 {/* SVG Inspection Hotspot Pins */}
                 <div className="absolute top-[30%] left-[20%] group cursor-pointer">
@@ -120,7 +123,9 @@ export default function Inventory() {
           <div key={vehicle.id} className="border border-white/10 bg-white/5 p-4 flex flex-col sm:flex-row items-center gap-6 hover:bg-white/10 transition-colors">
             {/* TelemetryDossierViewport: max-width 180px, object-fit contain so it's not stretched */}
             <div className="w-full sm:w-[180px] h-[120px] bg-black border border-white/20 flex-shrink-0 flex items-center justify-center p-2 relative overflow-hidden">
-               <img src={vehicle.image} alt={vehicle.name} className="max-w-full max-h-full object-contain" />
+               <div className="relative w-full h-full">
+                 <Image src={vehicle.image} alt={vehicle.name} fill className="object-contain" />
+               </div>
                <div className="absolute top-0 right-0 bg-black/80 px-2 py-1 text-[10px] font-mono border-b border-l border-white/20">LOW_RES</div>
             </div>
 
