@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { Button } from '@/components/Button';
 import { getWhatsAppUrl } from '@/lib/site-config';
 import { calculateLandedCost, formatNGN, formatCAD } from '@/lib/pricing';
@@ -64,16 +65,22 @@ export default function Home() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-black/60 z-10" /> {/* Overlay for contrast */}
         <AnimatePresence mode="wait">
-          <motion.img
+          <motion.div
             key={`${activeVehicle.id}-${activeAngle}`}
-            src={activeVehicle.images[activeAngle]}
-            alt={activeVehicle.name}
-            className="w-full h-full object-cover object-center"
+            className="absolute inset-0 z-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-          />
+          >
+            <Image
+              src={activeVehicle.images[activeAngle]}
+              alt={activeVehicle.name}
+              fill
+              className="object-cover object-center"
+              priority
+            />
+          </motion.div>
         </AnimatePresence>
 
         {/* Technical Grid Overlay */}
@@ -176,10 +183,17 @@ export default function Home() {
             </div>
           </div>
           <div className="order-1 md:order-2 relative aspect-square">
-            <div className="absolute inset-0 bg-white/5 border border-white/20 flex items-center justify-center p-8">
-               <img src="/images/WhatsApp Image 2026-11-02 at 8.13.10 PM.jpeg" alt="Uncle Modupe" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border border-white/10" />
+            <div className="absolute inset-0 bg-white/5 border border-white/20 p-8 flex items-center justify-center">
+               <div className="relative w-full h-full">
+                 <Image
+                   src="/images/WhatsApp Image 2026-11-02 at 8.13.10 PM.jpeg"
+                   alt="Uncle Modupe"
+                   fill
+                   className="object-cover grayscale hover:grayscale-0 transition-all duration-500 border border-white/10"
+                 />
+               </div>
             </div>
-            <div className="absolute -bottom-6 -left-6 bg-modfem-racingEmerald text-black font-mono text-xs p-4 font-bold uppercase">
+            <div className="absolute -bottom-6 -left-6 bg-modfem-racingEmerald text-black font-mono text-xs p-4 font-bold uppercase z-10">
               Modupe • Vaughan, ON
             </div>
           </div>
